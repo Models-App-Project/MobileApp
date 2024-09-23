@@ -19,7 +19,6 @@ jobs:
         with:
           flutter-version: '1.12.14'
           channel: 'dev'
-      - run: flutter pub get
       # run static analys code
       - run: flutter  analyze
       # run  flutter widgets tests  and unit tests
