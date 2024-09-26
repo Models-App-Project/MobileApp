@@ -8,10 +8,8 @@ class SplashPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        color: AppColors.white,
         alignment: Alignment.center,
-        decoration: const BoxDecoration(
-          color: AppColors.white
-        ),
         child: Image.asset('assets/images/logo_fernanda.png'),
       ),
     );
