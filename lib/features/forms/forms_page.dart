@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/common/constant/app_colors.dart';
+import 'package:flutter_application_1/common/widgets/custom_forms_button.dart';
 import 'package:flutter_application_1/common/widgets/custom_description_field.dart';
 import 'package:flutter_application_1/common/widgets/custom_text_field.dart';
 
@@ -44,6 +45,14 @@ class FormsPage extends StatelessWidget {
                     SizedBox(height: 16),
                     CustomTextField(campo: 'Hip', hint: 'Hip (cm)'),
                     SizedBox(height: 16),
+                    Row(
+                      children: [
+                        CustomFormsButton(title: 'CANCEL REQUEST', backgroundColor: AppColors.white, titleColor: Colors.black),
+                        SizedBox(width: 20),
+                        CustomFormsButton(title: 'SEND REQUEST', backgroundColor: AppColors.focusedInput, titleColor: AppColors.white),
+                      ],
+                    ),
+                    SizedBox(height: 32),
                   ],
                 ),
               ),

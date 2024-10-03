@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/features/forms/forms_page.dart';
 import 'package:flutter_application_1/features/home/home_page.dart';
 
 class App extends StatelessWidget {
@@ -11,7 +12,7 @@ class App extends StatelessWidget {
         overlays: []);
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: FormsPage(),
     );
   }
 }
