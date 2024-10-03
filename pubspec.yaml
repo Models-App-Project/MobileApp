@@ -90,6 +90,10 @@ flutter:
       fonts: 
         - asset: assets/fonts/BreeSerif_Regular.ttf
           weight: 400
+    - family: Josefin Sans
+      fonts:
+        - asset: assets/fonts/JosefinSans-Regular.ttf
+          weight: 400
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

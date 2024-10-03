@@ -23,4 +23,7 @@ class AppTextStyles {
 
   static const TextStyle formshintText = TextStyle(
       fontFamily: 'Bree Serif', fontSize: 12, fontWeight: FontWeight.w400);
+
+  static const TextStyle buttonFormsText = TextStyle(
+      fontFamily: 'Josefin Sans', fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 1.4);
 }
