@@ -16,4 +16,6 @@ class AppColors {
   static const focusedInput = Color(0xFF4F6BFF);
 
   static const cursor = Color(0xFF565656);
+
+  static const selectedItemColor = Color(0xFF4F6BA6);
 }
