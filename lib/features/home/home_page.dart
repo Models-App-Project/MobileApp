@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/common/constant/app_colors.dart';
 import 'package:flutter_application_1/common/constant/app_text_styles.dart';
+import 'package:flutter_application_1/common/widgets/contact_button.dart';
+import 'package:flutter_application_1/features/email/email_launcher.dart';
+import 'package:flutter_application_1/features/email/email_launcher_factory.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -8,19 +11,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-        ],
-        backgroundColor: AppColors.white,
-      ),
       backgroundColor: AppColors.white,
       body: Column(
         children: [
@@ -60,25 +50,23 @@ class HomePage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 30),
-          SizedBox(
-            width: 160,
-            child: OutlinedButton(
-              onPressed: () {},
-              style: OutlinedButton.styleFrom(
-                side: const BorderSide(color: AppColors.buttonBlue, width: 1.0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              child: Text(
-                "CONTACT ME",
-                style: AppTextStyles.buttonText
-                    .copyWith(color: AppColors.buttonBlue),
-              ),
-            ),
-          ),
+          ContactButton(onPressed: _onContactPressed),
         ],
       ),
     );
+  }
+
+  // Função que será executada ao clicar no botão de contato
+  void _onContactPressed() {
+    final Uri emailUri = EmailLauncherFactory.createEmailUri(
+      to: 'limaestudos14@gmail.com',
+      subject: 'Querida Fernanda',
+      body: '''Tive interesse na sua agência e gostaria de marcar uma reunião para conversarmos. Assim que possível, me informe qual horário e data podemos agendar essa reunião.
+      
+Aguardo o seu retorno.
+
+Atenciosamente,''',
+    );
+    EmailLauncher.sendEmail(emailUri);
   }
 }
