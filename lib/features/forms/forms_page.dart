@@ -47,9 +47,15 @@ class FormsPage extends StatelessWidget {
                     SizedBox(height: 16),
                     Row(
                       children: [
-                        CustomFormsButton(title: 'CANCEL REQUEST', backgroundColor: AppColors.white, titleColor: Colors.black),
+                        CustomFormsButton(
+                            title: 'CANCEL REQUEST',
+                            backgroundColor: AppColors.white,
+                            titleColor: AppColors.focusedInput),
                         SizedBox(width: 20),
-                        CustomFormsButton(title: 'SEND REQUEST', backgroundColor: AppColors.focusedInput, titleColor: AppColors.white),
+                        CustomFormsButton(
+                            title: 'SEND REQUEST',
+                            backgroundColor: AppColors.focusedInput,
+                            titleColor: AppColors.white),
                       ],
                     ),
                     SizedBox(height: 32),
