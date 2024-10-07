@@ -10,7 +10,7 @@ class SplashPage extends StatelessWidget {
       body: Container(
         color: AppColors.white,
         alignment: Alignment.center,
-        child: Image.asset('assets/images/logo_fernanda.png'),
+        child: Image.asset('assets/images/splash.png'),
       ),
     );
   }
