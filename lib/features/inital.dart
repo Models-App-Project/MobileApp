@@ -21,7 +21,7 @@ class _InitialState extends State<Initial> {
       backgroundColor: AppColors.white,
       body: pages[itemSelecionado],
       bottomNavigationBar: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 15),
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
@@ -33,17 +33,20 @@ class _InitialState extends State<Initial> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(30),
           child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
             selectedItemColor: AppColors.selectedItemColor,
             unselectedItemColor: Colors.black.withOpacity(0.5),
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
             backgroundColor: AppColors.white,
             currentIndex: itemSelecionado,
             items: const [
               BottomNavigationBarItem(
-                  icon: Icon(Icons.camera_alt_outlined), label: "Models"),
+                  icon: Icon(Icons.camera_alt_outlined), label: ''),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.home_outlined), label: "Home"),
+                  icon: Icon(Icons.home_outlined), label: ''),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.volunteer_activism_outlined), label: "Share")
+                  icon: Icon(Icons.volunteer_activism_outlined), label: '')
             ],
             onTap: (valor) {
               setState(() {
