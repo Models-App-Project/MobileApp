@@ -12,7 +12,7 @@ class Initial extends StatefulWidget {
 }
 
 class _InitialState extends State<Initial> {
-  int itemSelecionado = 0;
+  int itemSelecionado = 1;
   List pages = const [SplashPage(), HomePage(), FormsPage()];
 
   @override
@@ -21,7 +21,7 @@ class _InitialState extends State<Initial> {
       backgroundColor: AppColors.white,
       body: pages[itemSelecionado],
       bottomNavigationBar: Container(
-        margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 15),
+        margin: const EdgeInsets.only(left: 20, right: 20, bottom: 25, top: 15),
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
