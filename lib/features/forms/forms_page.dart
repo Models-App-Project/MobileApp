@@ -11,61 +11,57 @@ class FormsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      body: ListView(children: [
-        Column(
-          children: [
-            const SizedBox(height: 20),
-            Expanded(
-                flex: 0,
-                child: Image.asset('assets/images/logo_fernanda2.png')),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Form(
-                child: Column(
+      body: Column(
+        children: [
+          // A imagem que fica fixa na parte superior
+          Image.asset('assets/images/logo_fernanda2.png'),
+          // O conteúdo rolável embaixo da imagem
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              children: const [
+                SizedBox(height: 20),
+                CustomTextField(campo: 'Name', hint: 'Full Name'),
+                SizedBox(height: 16),
+                CustomTextField(campo: 'Age', hint: 'Age'),
+                SizedBox(height: 16),
+                CustomDescriptionField(),
+                SizedBox(height: 16),
+                CustomTextField(campo: 'Email', hint: 'Email (example@gmail.com)'),
+                SizedBox(height: 16),
+                CustomTextField(campo: 'Height', hint: 'Height (cm)'),
+                SizedBox(height: 16),
+                CustomTextField(campo: 'Eye’s Color', hint: 'Eye’s Color'),
+                SizedBox(height: 16),
+                CustomTextField(campo: 'Hair’s Color', hint: 'Hair’s Color'),
+                SizedBox(height: 16),
+                CustomTextField(campo: 'Waistline', hint: 'Waist (cm)'),
+                SizedBox(height: 16),
+                CustomTextField(campo: 'Bust', hint: 'Bust (cm)'),
+                SizedBox(height: 16),
+                CustomTextField(campo: 'Hip', hint: 'Hip (cm)'),
+                SizedBox(height: 16),
+                Row(
                   children: [
-                    CustomTextField(campo: 'Name', hint: 'Full Name'),
-                    SizedBox(height: 16),
-                    CustomTextField(campo: 'Age', hint: 'Age'),
-                    SizedBox(height: 16),
-                    CustomDescriptionField(),
-                    SizedBox(height: 16),
-                    CustomTextField(
-                        campo: 'Email', hint: 'Email (example@gmail.com)'),
-                    SizedBox(height: 16),
-                    CustomTextField(campo: 'Height', hint: 'Height (cm)'),
-                    SizedBox(height: 16),
-                    CustomTextField(campo: 'Eye’s Color', hint: 'Eye’s Color'),
-                    SizedBox(height: 16),
-                    CustomTextField(
-                        campo: 'Hair’s Color', hint: 'Hair’s Color'),
-                    SizedBox(height: 16),
-                    CustomTextField(campo: 'Waistline', hint: 'Waist (cm)'),
-                    SizedBox(height: 16),
-                    CustomTextField(campo: 'Bust', hint: 'Bust (cm)'),
-                    SizedBox(height: 16),
-                    CustomTextField(campo: 'Hip', hint: 'Hip (cm)'),
-                    SizedBox(height: 16),
-                    Row(
-                      children: [
-                        CustomFormsButton(
-                            title: 'CANCEL REQUEST',
-                            backgroundColor: AppColors.white,
-                            titleColor: AppColors.focusedInput),
-                        SizedBox(width: 20),
-                        CustomFormsButton(
-                            title: 'SEND REQUEST',
-                            backgroundColor: AppColors.focusedInput,
-                            titleColor: AppColors.white),
-                      ],
+                    CustomFormsButton(
+                      title: 'CANCEL REQUEST',
+                      backgroundColor: AppColors.white,
+                      titleColor: AppColors.focusedInput,
                     ),
-                    SizedBox(height: 32),
+                    SizedBox(width: 20),
+                    CustomFormsButton(
+                      title: 'SEND REQUEST',
+                      backgroundColor: AppColors.focusedInput,
+                      titleColor: AppColors.white,
+                    ),
                   ],
                 ),
-              ),
+                SizedBox(height: 32),
+              ],
             ),
-          ],
-        ),
-      ]),
+          ),
+        ],
+      ),
     );
   }
 }
