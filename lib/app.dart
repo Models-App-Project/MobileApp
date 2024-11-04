@@ -2,16 +2,71 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/features/inital.dart';
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   const App({super.key});
 
   @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this); // Adiciona o observer para ciclo de vida
+    _enableImmersiveMode(); // Ativa o modo imersivo no início
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this); // Remove o observer ao sair
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      // Ativa o modo imersivo automaticamente ao voltar para o app
+      _enableImmersiveMode();
+    }
+  }
+
+  void _enableImmersiveMode() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    // Redefine o modo imersivo após 2 segundos para ocultar a barra novamente
+    Future.delayed(const Duration(seconds: 2), () {
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky,
-        overlays: []);
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Initial(),
+      navigatorObservers: [MyNavigatorObserver()],
+      home: GestureDetector(
+        onTap: () {
+          // Oculta o teclado ao tocar fora do campo e ativa o modo imersivo
+          FocusManager.instance.primaryFocus?.unfocus();
+          _enableImmersiveMode();
+        },
+        child: const Initial(),
+      ),
     );
+  }
+}
+
+// NavigatorObserver personalizado para detectar navegação entre telas
+class MyNavigatorObserver extends NavigatorObserver {
+  @override
+  void didPop(Route route, Route? previousRoute) {
+    super.didPop(route, previousRoute);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  }
+
+  @override
+  void didPush(Route route, Route? previousRoute) {
+    super.didPush(route, previousRoute);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   }
 }
