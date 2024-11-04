@@ -7,10 +7,12 @@ class CustomTextField extends StatelessWidget {
     super.key,
     required this.campo,
     required this.hint,
+    this.focusNode, // Adiciona o FocusNode como parâmetro opcional
   });
 
   final String campo;
   final String hint;
+  final FocusNode? focusNode; // Declara o FocusNode como uma propriedade opcional
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class CustomTextField extends StatelessWidget {
         SizedBox(
           height: 36,
           child: TextFormField(
+            focusNode: focusNode, // Atribui o FocusNode ao TextFormField
             textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 12),
@@ -32,7 +35,6 @@ class CustomTextField extends StatelessWidget {
               hintText: hint,
               hintStyle: AppColors.hintText,
               enabledBorder: const OutlineInputBorder(
-                // Adicione isso
                 borderSide: BorderSide(color: AppColors.borderInput),
               ),
               focusedBorder: const OutlineInputBorder(
