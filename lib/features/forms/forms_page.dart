@@ -14,23 +14,23 @@ class FormsPage extends StatelessWidget {
     final focusNodes = List<FocusNode>.generate(10, (_) => FocusNode());
 
     // Função para ativar o modo imersivo
-    void _enableImmersiveMode() {
+    void enableImmersiveMode() {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     }
 
     // Função para esconder a barra de status quando o foco sai de um campo
-    void _addFocusListeners() {
+    void addFocusListeners() {
       for (var focusNode in focusNodes) {
         focusNode.addListener(() {
           if (!focusNode.hasFocus) {
-            _enableImmersiveMode();
+            enableImmersiveMode();
           }
         });
       }
     }
 
     // Inicializa os listeners para foco
-    _addFocusListeners();
+    addFocusListeners();
 
     return Scaffold(
       backgroundColor: AppColors.white,
