@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/data/Http/http_client.dart';
+import 'package:flutter_application_1/data/Repository/model_repository.dart';
 import 'package:flutter_application_1/features/inital.dart';
+import 'package:flutter_application_1/features/stores/model_store.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -10,11 +13,19 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> with WidgetsBindingObserver {
+  final ModelStore store = ModelStore(
+    repository: ModelRepository(
+      client: HttpClient(),
+    ),
+  );
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this); // Adiciona o observer para ciclo de vida
-    _enableImmersiveMode(); // Ativa o modo imersivo no início
+    WidgetsBinding.instance
+        .addObserver(this); // Adiciona o observer para ciclo de vida
+    _enableImmersiveMode();
+    store.getModels(); // Ativa o modo imersivo no início
   }
 
   @override
