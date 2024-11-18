@@ -12,8 +12,9 @@ class ModelModel {
   final double waistline;
   final double hip;
   final double bust;
+  final List<String> url;
 
-  ModelModel(
+  ModelModel( 
       {required this.id,
       required this.name,
       required this.age,
@@ -24,7 +25,8 @@ class ModelModel {
       required this.weight,
       required this.waistline,
       required this.hip,
-      required this.bust});
+      required this.bust,
+      required this.url});
 
   factory ModelModel.fromMap(Map<String, dynamic> map) {
     return ModelModel(
@@ -38,6 +40,7 @@ class ModelModel {
         weight: map['weight'] * 1.0,
         waistline: map['waistline'] * 1.0,
         hip: map['hip'] * 1.0,
-        bust: map['bust'] * 1.0);
+        bust: map['bust'] * 1.0, 
+        url: map['url']);
   }
 }
