@@ -5,7 +5,10 @@ import 'package:flutter_application_1/common/constant/app_text_styles.dart';
 class CustomDescriptionField extends StatelessWidget {
   const CustomDescriptionField({
     super.key,
+    this.focusNode, // Adicione o FocusNode como parâmetro opcional
   });
+
+  final FocusNode? focusNode; // Declare o FocusNode como uma propriedade opcional
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +21,13 @@ class CustomDescriptionField extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         TextFormField(
+          focusNode: focusNode, // Atribua o FocusNode ao TextFormField
           maxLines: 8,
           decoration: const InputDecoration(
             hintText:
                 'Talk a little about you and why do you want to work here',
             hintStyle: AppColors.hintText,
             enabledBorder: OutlineInputBorder(
-              // Adicione isso
               borderSide: BorderSide(color: AppColors.borderInput),
             ),
             focusedBorder: OutlineInputBorder(
@@ -33,8 +36,14 @@ class CustomDescriptionField extends StatelessWidget {
           ),
           cursorColor: AppColors.cursor,
           style: AppTextStyles.formshintText,
+          keyboardType: TextInputType.multiline,
+          textInputAction: TextInputAction.done,
+          onFieldSubmitted: (_) {
+            focusNode?.unfocus(); // Oculta o teclado ao pressionar "Done"
+          },
         ),
       ],
     );
   }
 }
+

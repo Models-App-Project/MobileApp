@@ -7,12 +7,16 @@ class CustomTextField extends StatelessWidget {
     super.key,
     required this.campo,
     required this.hint,
-    this.focusNode, // Adiciona o FocusNode como parâmetro opcional
+    this.keyboardType = TextInputType.text,
+    this.focusNode,
+    this.nextFocusNode // Adiciona o FocusNode como parâmetro opcional
   });
 
+  final TextInputType keyboardType;
   final String campo;
   final String hint;
-  final FocusNode? focusNode; // Declara o FocusNode como uma propriedade opcional
+  final FocusNode? focusNode;
+  final FocusNode? nextFocusNode; // Declara o FocusNode como uma propriedade opcional
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +34,8 @@ class CustomTextField extends StatelessWidget {
             focusNode: focusNode, // Atribui o FocusNode ao TextFormField
             textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(
-              contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 12),
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 0, horizontal: 12),
               hintTextDirection: TextDirection.ltr,
               hintText: hint,
               hintStyle: AppColors.hintText,
@@ -43,6 +48,14 @@ class CustomTextField extends StatelessWidget {
             ),
             cursorColor: AppColors.cursor,
             style: AppTextStyles.formshintText,
+            keyboardType: keyboardType,
+            onFieldSubmitted: (_) => {
+              if (nextFocusNode != null) {
+                FocusScope.of(context).requestFocus(nextFocusNode)
+              } else {
+                FocusScope.of(context).unfocus()
+              }
+            },
           ),
         ),
       ],
