@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/common/constant/app_colors.dart';
+import 'package:flutter_application_1/features/Models/models_page.dart';
 import 'package:flutter_application_1/features/home/home_page.dart';
-import 'package:flutter_application_1/features/splash/splash_page.dart';
 import 'package:flutter_application_1/features/takePart/take_part_page.dart';
 
 class Initial extends StatefulWidget {
@@ -13,7 +13,11 @@ class Initial extends StatefulWidget {
 
 class _InitialState extends State<Initial> {
   int itemSelecionado = 1;
-  List pages = const [SplashPage(), HomePage(), TakePartPage()];
+  List pages = [
+    ModelsPage(),
+    const HomePage(),
+    const TakePartPage()
+  ];
 
   @override
   Widget build(BuildContext context) {
