@@ -2,13 +2,44 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/common/constant/app_colors.dart';
 import 'package:flutter_application_1/common/constant/app_text_styles.dart';
 
-class CustomDescriptionField extends StatelessWidget {
+class CustomDescriptionField extends StatefulWidget {
   const CustomDescriptionField({
     super.key,
-    this.focusNode, // Adicione o FocusNode como parâmetro opcional
+    this.focusNode,
+    required this.controller,
+    required this.hasError,
   });
 
-  final FocusNode? focusNode; // Declare o FocusNode como uma propriedade opcional
+  final FocusNode? focusNode;
+  final TextEditingController controller; // Agora recebe o controller.
+  final bool hasError; // Parâmetro para indicar erro.
+
+  @override
+  State<CustomDescriptionField> createState() => _CustomDescriptionFieldState();
+}
+
+class _CustomDescriptionFieldState extends State<CustomDescriptionField> {
+  late int _characterCount;
+
+  @override
+  void initState() {
+    super.initState();
+    _characterCount = widget.controller.text.length; // Inicializa o contador.
+
+    // Adiciona um listener ao controller para atualizar o contador em tempo real.
+    widget.controller.addListener(() {
+      setState(() {
+        _characterCount = widget.controller.text.length;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    // Remove o listener ao descartar o widget.
+    widget.controller.removeListener(() {});
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,29 +52,38 @@ class CustomDescriptionField extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         TextFormField(
-          focusNode: focusNode, // Atribua o FocusNode ao TextFormField
+          style: AppTextStyles.formshintText,
+          controller: widget.controller,
+          focusNode: widget.focusNode,
           maxLines: 8,
-          decoration: const InputDecoration(
+          maxLength: 200, // Limita a 200 caracteres.
+          decoration: InputDecoration(
             hintText:
                 'Talk a little about you and why do you want to work here',
-            hintStyle: AppColors.hintText,
+            hintStyle:
+                AppTextStyles.formshintText.copyWith(color: AppColors.hintText),
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: AppColors.borderInput),
+              borderSide: BorderSide(
+                color:
+                    widget.hasError ? Colors.redAccent : AppColors.borderInput,
+              ),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: AppColors.focusedInput),
+              borderSide: BorderSide(
+                color:
+                    widget.hasError ? Colors.redAccent : AppColors.focusedInput,
+              ),
+            ),
+            errorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.redAccent),
+            ),
+            counterText: '$_characterCount/200', // Atualiza o contador.
+            counterStyle: AppTextStyles.smallText.copyWith(
+              color: widget.hasError ? Colors.redAccent : AppColors.hintText,
             ),
           ),
-          cursorColor: AppColors.cursor,
-          style: AppTextStyles.formshintText,
-          keyboardType: TextInputType.multiline,
-          textInputAction: TextInputAction.done,
-          onFieldSubmitted: (_) {
-            focusNode?.unfocus(); // Oculta o teclado ao pressionar "Done"
-          },
         ),
       ],
     );
   }
 }
-

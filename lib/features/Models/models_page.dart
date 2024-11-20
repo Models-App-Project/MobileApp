@@ -62,7 +62,7 @@ class _ModelsPageState extends State<ModelsPage> {
                                 .copyWith(color: Colors.black12)),
                         behavior: SnackBarBehavior.floating,
                         backgroundColor: Colors.redAccent,
-                        duration: const Duration(seconds: 5),
+                        duration: const Duration(seconds: 2),
                         margin: const EdgeInsets.only(
                             bottom: 15, right: 20, left: 20),
                       ));
@@ -105,8 +105,8 @@ class _ModelsPageState extends State<ModelsPage> {
                             child: Image.network(
                               model.url.first,
                               fit: BoxFit.cover,
-                              width: 200,
-                              height: 300,
+                              width: 250,
+                              height: 800,
                               errorBuilder: (context, error, stackTrace) =>
                                   const Icon(
                                 Icons.broken_image,
