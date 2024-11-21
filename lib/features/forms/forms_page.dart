@@ -94,9 +94,21 @@ class _FormsPageState extends State<FormsPage> {
     try {
       final response = await formsRepository.postForms(form);
 
-      // Usando addPostFrameCallback para garantir que o contexto seja válido após o build
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (response == 200) {
+          // Limpa todos os campos
+          nameController.clear();
+          ageController.clear();
+          descriptionController.clear();
+          emailController.clear();
+          heightController.clear();
+          weightController.clear();
+          eyesColorController.clear();
+          hairsColorController.clear();
+          waistlineController.clear();
+          bustController.clear();
+          hipController.clear();
+
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text('Formulário enviado com sucesso!',
                 style:
@@ -119,7 +131,6 @@ class _FormsPageState extends State<FormsPage> {
         }
       });
     } catch (error) {
-      // Lidar com erros
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('Erro ao enviar formulário: $error',
