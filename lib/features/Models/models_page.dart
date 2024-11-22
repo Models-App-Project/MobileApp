@@ -2,23 +2,51 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/common/constant/app_colors.dart';
 import 'package:flutter_application_1/common/constant/app_text_styles.dart';
 import 'package:flutter_application_1/data/Http/http_client.dart';
+import 'package:flutter_application_1/data/Models/model_model.dart';
 import 'package:flutter_application_1/data/Repository/model_repository.dart';
-import 'package:flutter_application_1/features/stores/model_store.dart';
 
 class ModelsPage extends StatefulWidget {
   ModelsPage({super.key});
-
-  final ModelStore store = ModelStore(
-    repository: ModelRepository(
-      client: HttpClient(),
-    ),
-  );
 
   @override
   State<ModelsPage> createState() => _ModelsPageState();
 }
 
 class _ModelsPageState extends State<ModelsPage> {
+  final ModelRepository repository = ModelRepository(client: HttpClient());
+  List<ModelModel> models = [];
+  bool isLoading = false;
+  String errorMessage = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchModels();
+  }
+
+  Future<void> _fetchModels() async {
+    setState(() {
+      isLoading = true;
+      errorMessage = '';
+    });
+
+    try {
+      final fetchedModels = await repository.getModels();
+      setState(() {
+        models = fetchedModels;
+      });
+    } catch (e) {
+      setState(() {
+        errorMessage =
+            'Erro ao carregar os modelos. Tente novamente mais tarde.';
+      });
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,86 +69,48 @@ class _ModelsPageState extends State<ModelsPage> {
             // Main Image Section
             Expanded(
               flex: 5,
-              child: AnimatedBuilder(
-                animation: Listenable.merge([
-                  widget.store.isLoading,
-                  widget.store.erro,
-                  widget.store.state,
-                ]),
-                builder: (context, child) {
-                  if (widget.store.isLoading.value) {
-                    return const Center(
+              child: isLoading
+                  ? const Center(
                       child: CircularProgressIndicator(),
-                    );
-                  }
-
-                  if (widget.store.erro.value.isNotEmpty) {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(widget.store.erro.value,
-                            style: AppTextStyles.smallText
-                                .copyWith(color: Colors.black12)),
-                        behavior: SnackBarBehavior.floating,
-                        backgroundColor: Colors.redAccent,
-                        duration: const Duration(seconds: 2),
-                        margin: const EdgeInsets.only(
-                            bottom: 15, right: 20, left: 20),
-                      ));
-                    });
-
-                    return _buildErrorCard(
-                      message:
-                          'Erro ao carregar os dados: ${widget.store.erro.value}',
-                      icon: Icons.error,
-                    );
-                  }
-
-                  if (widget.store.state.value.isEmpty) {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text('Nenhuma modelo foi encontrada.'),
-                        behavior: SnackBarBehavior.floating,
-                        backgroundColor: Colors.redAccent,
-                        duration: Duration(seconds: 5),
-                        margin:
-                            EdgeInsets.only(bottom: 15, right: 20, left: 20),
-                      ));
-                    });
-
-                    return _buildErrorCard(
-                      message: 'Nenhuma modelo foi encontrada no momento.',
-                      icon: Icons.error_outline,
-                    );
-                  } else {
-                    // Carousel-like horizontal list
-                    return ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: widget.store.state.value.length,
-                      itemBuilder: (_, index) {
-                        final model = widget.store.state.value[index];
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(16),
-                            child: Image.network(
-                              model.url.first,
-                              fit: BoxFit.cover,
-                              width: 250,
-                              height: 800,
-                              errorBuilder: (context, error, stackTrace) =>
-                                  const Icon(
-                                Icons.broken_image,
-                                size: 100,
-                                color: Colors.grey,
-                              ),
+                    )
+                  : errorMessage.isNotEmpty
+                      ? _buildErrorCard(
+                          message: errorMessage,
+                          icon: Icons.error,
+                        )
+                      : models.isEmpty
+                          ? _buildErrorCard(
+                              message:
+                                  'Nenhuma modelo foi encontrada no momento.',
+                              icon: Icons.error_outline,
+                            )
+                          : ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: models.length,
+                              itemBuilder: (_, index) {
+                                final model = models[index];
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 8),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(16),
+                                    child: Image.network(
+                                      model.photos.first.downloadURL,
+                                      fit: BoxFit.cover,
+                                      width: 250,
+                                      height: 800,
+                                      errorBuilder:
+                                          (context, error, stackTrace) =>
+                                              const Icon(
+                                        Icons.broken_image,
+                                        size: 100,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
-                          ),
-                        );
-                      },
-                    );
-                  }
-                },
-              ),
             ),
           ],
         ),
