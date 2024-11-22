@@ -1,7 +1,8 @@
-import 'package:uuid/uuid.dart';
+import 'package:flutter_application_1/data/Models/photos_model.dart';
+import 'package:flutter_application_1/data/Models/request_model.dart';
 
 class ModelModel {
-  final Uuid id;
+  final String id;
   final String name;
   final int age;
   final String description;
@@ -12,35 +13,42 @@ class ModelModel {
   final double waistline;
   final double hip;
   final double bust;
-  final List<String> url;
+  final RequestModel request;
+  final List<PhotosModel> photos;
 
-  ModelModel( 
-      {required this.id,
-      required this.name,
-      required this.age,
-      required this.description,
-      required this.eyesColor,
-      required this.hairColor,
-      required this.height,
-      required this.weight,
-      required this.waistline,
-      required this.hip,
-      required this.bust,
-      required this.url});
+  ModelModel({
+    required this.id,
+    required this.name,
+    required this.age,
+    required this.description,
+    required this.eyesColor,
+    required this.hairColor,
+    required this.height,
+    required this.weight,
+    required this.waistline,
+    required this.hip,
+    required this.bust,
+    required this.request,
+    required this.photos,
+  });
 
   factory ModelModel.fromMap(Map<String, dynamic> map) {
     return ModelModel(
-        id: map['id'],
-        name: map['name'],
-        age: map['age'],
-        description: map['description'],
-        eyesColor: map['eyesColor'],
-        hairColor: map['hairColor'],
-        height: map['height'] * 1.0,
-        weight: map['weight'] * 1.0,
-        waistline: map['waistline'] * 1.0,
-        hip: map['hip'] * 1.0,
-        bust: map['bust'] * 1.0, 
-        url: map['url']);
+      id: map['id'],
+      name: map['name'],
+      age: map['age'],
+      description: map['description'],
+      eyesColor: map['eyesColor'],
+      hairColor: map['hairColor'],
+      height: map['height'],
+      weight: map['weight'],
+      waistline: map['waistline'],
+      hip: map['hip'],
+      bust: map['bust'],
+      request: RequestModel.fromMap(map['request']),
+      photos: (map['photos'] as List)
+          .map((photo) => PhotosModel.fromMap(photo))
+          .toList(),
+    );
   }
 }
