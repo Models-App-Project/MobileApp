@@ -16,17 +16,18 @@ class ModelRepository implements IModelRepository {
   @override
   Future<List<ModelModel>> getModels() async {
     final response = await client.get(
-      url: 'http://',
+      url:
+          'https://models-api-production.up.railway.app/models/getModels/findAll',
     );
+
     if (response.statusCode == 200) {
       final List<ModelModel> modelos = [];
 
-      final body = jsonDecode(response.body);
+      final body = jsonDecode(response.body) as List;
 
-      body.map((item) {
-        final ModelModel modelo = ModelModel.fromMap(item);
-        modelos.add(modelo);
-      }).toList();
+      for (var item in body) {
+        modelos.add(ModelModel.fromMap(item));
+      }
 
       return modelos;
     } else if (response.statusCode == 404) {
